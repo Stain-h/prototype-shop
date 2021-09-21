@@ -31,10 +31,14 @@ const AppStateProvider = ({ children }) => {
   },[])
 
   const remove = useCallback((id) => {
-    console.log(id);
+    setOrders((orders)=> {
+      return orders.filter((order)=> order.id !== id)
+    })
   },[])
-  
-  const removeAll = useCallback(() => {},[])
+
+  const removeAll = useCallback(() => {
+    setOrders([]);
+  },[])
 
   return (
     <AppStateContext.Provider value={{

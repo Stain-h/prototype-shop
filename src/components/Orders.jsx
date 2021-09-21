@@ -1,11 +1,22 @@
 import useOrders from '../hooks/useOrders'
 import usePrototypes from '../hooks/usePrototypes'
 import useActions from '../hooks/useActions'
+import { useMemo } from 'react';
 
 export default function Orders() {
   const orders = useOrders();
   const prototypes = usePrototypes();
-  const { remove } = useActions();
+  const { remove, removeAll } = useActions();
+
+  const totalPrice = useMemo(() => {
+    // orders.order.id === prototypes.prototype.id  => (prototype.price * order.quantity ) 전부 더해준다. 
+    return orders.map((order)=> {
+        const { id, quantity } = order;
+        const prototype = prototypes.find((p)=> p.id === id)
+        return prototype.price * quantity
+      })
+      .reduce((l, r) => l + r, 0);
+  },[orders, prototypes]);
   
   if(orders.length === 0){
     return (
@@ -43,12 +54,27 @@ export default function Orders() {
                 <div className="action">
                   <p className="price">$ {prototype.price * order.quantity}</p>
                   <button className="btn btn--link" onClick={click}>
-                    <i className="icon icon--plus"></i>
+                    <i className="icon icon--cross"></i>
                   </button>
                 </div>
               </div>
             );
           })}
+        </div>
+        <div className="total">
+          <hr/>
+          <div className="item">
+            <div className="content">Total</div>
+            <div className="action">
+              <div className="price">$ {totalPrice}</div>
+            </div>
+            <button className="btn btn--link" onClick={removeAll}>
+              <i className="icon icon--delete"></i>
+            </button>
+          </div>
+          <button className="btn btn--secondary" style={{ width: '100%', marginTop: 10 }}>
+            CheckOut
+          </button>
         </div>
       </div>
     </aside>
