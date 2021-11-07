@@ -1,6 +1,5 @@
-# React 프로젝트
-
-React와 ContextAPI를 사용해 만든 상품 오더 토이프로젝트 입니다.
+# React & Context-API Project
+상품 오더와 가격을 계산하는 토이 프로젝트로 리액트와 Context-API로 작업했습니다.
 
 ## 기술스택 
 - React
