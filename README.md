@@ -4,3 +4,8 @@
 ## 기술스택 
 - React
 - Context API
+
+
+## 개발환경 
+- node@14.18.0 
+- react@17.0.2
